@@ -13,4 +13,14 @@ export default [
       "no-undef": "warn",
     },
   },
+  {
+    overrides: [
+      {
+        files: ["./src/tests/*.test.js"],
+        env: {
+          jest: true,
+        },
+      },
+    ],
+  },
 ];
