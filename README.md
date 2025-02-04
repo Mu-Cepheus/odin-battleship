@@ -1,7 +1,4 @@
-Template repository for [The Odin Project](https://www.theodinproject.com)
+Final project of [The Odin Project javascript course](https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript)
 
-- NPM package file with some initial dev dependencies
-- Webpack configuration with split files for production and development
-  - Includes configuration for loading images and fonts as assets
-- No CSS reset, normalize, or framework (setup if necessary)
-- ESLint for linting and Prettier for formatting, default configs for each
+- Webpack for bundling
+- Jest for Test Driven Development(TDD), used to implement unit tests for individual modules governing program logic
