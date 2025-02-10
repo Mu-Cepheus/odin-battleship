@@ -5,6 +5,7 @@ import eslintConfigPrettier from "eslint-config-prettier";
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   { languageOptions: { globals: globals.browser } },
+  { languageOptions: { globals: globals.jest } },
   pluginJs.configs.recommended,
   eslintConfigPrettier,
   {
@@ -12,15 +13,5 @@ export default [
       "no-unused-vars": "warn",
       "no-undef": "warn",
     },
-  },
-  {
-    overrides: [
-      {
-        files: ["./src/tests/*.test.js"],
-        env: {
-          jest: true,
-        },
-      },
-    ],
   },
 ];
