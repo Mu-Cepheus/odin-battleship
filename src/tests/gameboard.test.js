@@ -5,3 +5,8 @@ test("Gameboard constructor creates boards", () => {
   expect(gb.shipGrid.length).toBe(10);
   expect(gb.attackGrid.length).toBe(10);
 });
+
+test("Create a ship and report", () => {
+  let gb = new Gameboard();
+  expect(gb.createShip("carrier", [0, 0], "down")).toBe(true);
+});
