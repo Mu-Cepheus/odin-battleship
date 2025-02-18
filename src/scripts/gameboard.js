@@ -1,57 +1,115 @@
 import Ship from "./ship.js";
 
-export default class Gameboard {
-  #shipGrid = []; //enemy's attackGrid communicates with this
-  #attackGrid = []; //this communicates with enemy shipGrid
+const bote = ["carrier", "battleship", "destroyer", "submarine", "patrolBoat"];
+
+class Gameboard {
+  #grid = [];
   #ships = {};
 
   //compose ships onto this class
   constructor() {
     for (let i = 0; i < 10; i++) {
-      this.#shipGrid.push([]);
-      this.#attackGrid.push([]);
+      this.#grid.push([]);
     }
   }
 
+  get ships() {
+    return this.#ships;
+  }
+
   createShip(argType, argCoord, argDirection) {
-    if (
-      [
-        "carrier",
-        "battleship",
-        "destroyer",
-        "submarine",
-        "patrolBoat",
-      ].includes(argType)
-    ) {
+    let shipLength, coords;
+    if (bote.includes(argType)) {
       switch (argType) {
         case "carrier":
-          this.#ships.carrier = new Ship(5, argCoord, argDirection);
-          return true;
+          shipLength = 5;
+          break;
         case "battleship":
-          this.#ships.battleship = new Ship(4, argCoord, argDirection);
-          return true;
+          shipLength = 4;
+          break;
         case "destroyer":
-          this.#ships.destroyer = new Ship(3, argCoord, argDirection);
-          return true;
+          shipLength = 3;
+          break;
         case "submarine":
-          this.#ships.submarine = new Ship(3, argCoord, argDirection);
-          return true;
+          shipLength = 3;
+          break;
         case "patrolBoat":
-          this.#ships.patrolBoat = new Ship(2, argCoord, argDirection);
-          return true;
+          shipLength = 2;
+          break;
+      }
+      coords = calculatePlacement(shipLength, argCoord, argDirection);
+      if (coords) {
+        if (this.#ships[argType])
+          throw new Error("Ship has already been instantiated");
+        else {
+          if (this.#isClearPath(coords)) {
+            this.#ships[argType] = new Ship(shipLength, coords);
+            for (const node of coords) {
+              this.#grid[node[0]][node[1]] = { ship: this.#ships[argType] };
+            }
+            return true;
+          } else {
+            throw new Error("Ship overlaps with existing ship");
+          }
+        }
+      } else {
+        throw new Error("Illegal placement of ship");
       }
     } else {
       throw new Error("Invalid ship type");
     }
   }
 
-  get shipGrid() {
-    return this.#shipGrid;
+  //check other ship locations during placement
+  #isClearPath(argPath) {
+    for (const node of argPath) {
+      if (this.#grid[node[0]][node[1]]?.ship) return false;
+    }
+    return true;
   }
 
-  get attackGrid() {
-    return this.#attackGrid;
+  get grid() {
+    return this.#grid;
   }
 
   receiveAttack() {}
 }
+
+function calculatePlacement(argLength, argCoord, argDirection) {
+  switch (argDirection) {
+    case "down":
+      if (argCoord[0] + argLength < 11) {
+        let path = [argCoord];
+        for (let i = 1; i < argLength; i++) {
+          path.push([argCoord[0] + i, argCoord[1]]);
+        }
+        return path;
+      } else return false;
+    case "up":
+      if (argCoord[0] - argLength > -2) {
+        let path = [argCoord];
+        for (let i = 1; i < argLength; i++) {
+          path.push([argCoord[0] - i, argCoord[1]]);
+        }
+        return path;
+      } else return false;
+    case "right":
+      if (argCoord[1] + argLength < 11) {
+        let path = [argCoord];
+        for (let i = 1; i < argLength; i++) {
+          path.push([argCoord[0], argCoord[1] + i]);
+        }
+        return path;
+      } else return false;
+    case "left":
+      if (argCoord[1] - argLength > -2) {
+        let path = [argCoord];
+        for (let i = 1; i < argLength; i++) {
+          path.push([argCoord[0], argCoord[1] - i]);
+        }
+        return path;
+      } else return false;
+  }
+}
+
+export { Gameboard as default };

@@ -4,13 +4,11 @@ export default class Ship {
   #sunk = false;
   #coords;
 
-  constructor(argLength, argCoord, argDirection) {
-    if (argLength > 5 || argLength < 2) throw new Error("Invalid ship length");
-    this.#coords = calculatePlacement(argLength, argCoord, argDirection);
-    if (this.#coords === false) throw new Error("Illegal placement of ship");
+  constructor(argLength, argCoords) {
     this.#length = argLength;
     this.#hits = 0;
     this.#sunk = false;
+    this.#coords = argCoords;
   }
 
   get coords() {
@@ -29,42 +27,5 @@ export default class Ship {
     } else {
       return this.#sunk;
     }
-  }
-}
-
-function calculatePlacement(argLength, argCoord, argDirection) {
-  switch (argDirection) {
-    case "down":
-      if (argCoord[0] + argLength < 10) {
-        let path = [argCoord];
-        for (let i = 1; i < argLength; i++) {
-          path.push([argCoord[0] + i, argCoord[1]]);
-        }
-        return path;
-      } else return false;
-    case "up":
-      if (argCoord[0] - argLength > -2) {
-        let path = [argCoord];
-        for (let i = 1; i < argLength; i++) {
-          path.push([argCoord[0] - i, argCoord[1]]);
-        }
-        return path;
-      } else return false;
-    case "right":
-      if (argCoord[1] + argLength < 10) {
-        let path = [argCoord];
-        for (let i = 1; i < argLength; i++) {
-          path.push([argCoord[0], argCoord[1] + i]);
-        }
-        return path;
-      } else return false;
-    case "left":
-      if (argCoord[1] - argLength > -2) {
-        let path = [argCoord];
-        for (let i = 1; i < argLength; i++) {
-          path.push([argCoord[0], argCoord[1] - i]);
-        }
-        return path;
-      } else return false;
   }
 }
