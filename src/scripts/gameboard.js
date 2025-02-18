@@ -72,7 +72,26 @@ class Gameboard {
     return this.#grid;
   }
 
-  receiveAttack() {}
+  receiveAttack(argX, argY) {
+    if (this.#grid[argX][argY]?.hit)
+      throw new Error("Square has already been hit");
+    else if (this.#grid[argX][argY]?.ship) {
+      this.#grid[argX][argY].hit = true;
+      return this.#grid[argX][argY].ship.hit();
+    } else {
+      this.#grid[argX][argY] = { hit: true };
+      return this.#grid[argX][argY].hit;
+    }
+  }
+
+  reportFleetSunk() {
+    let count = 0;
+    for (const ship in this.#ships) {
+      if (ship.isSunk()) count += 1;
+    }
+    if (count >= 5) return true;
+    else return false;
+  }
 }
 
 function calculatePlacement(argLength, argCoord, argDirection) {

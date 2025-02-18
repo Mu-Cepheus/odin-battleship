@@ -1,8 +1,8 @@
 {
-  "name": "odin-template-repo",
+  "name": "odin-battleship",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/scripts/main.js",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "dev": "webpack serve --open --config webpack.dev.js",
