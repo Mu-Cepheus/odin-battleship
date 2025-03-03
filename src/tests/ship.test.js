@@ -3,10 +3,14 @@ import Ship from "./../scripts/ship.js";
 let bro;
 
 beforeEach(() => {
-  bro = new Ship(2, [
-    [0, 0],
-    [0, 1],
-  ]);
+  bro = new Ship(
+    2,
+    [
+      [0, 0],
+      [0, 1],
+    ],
+    "right",
+  );
 });
 
 afterEach(() => {
@@ -30,4 +34,8 @@ test("Check location reporting", () => {
     [0, 0],
     [0, 1],
   ]);
+});
+
+test("Check direction reporting", () => {
+  expect(bro.direction).toBe("right");
 });

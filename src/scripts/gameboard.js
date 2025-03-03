@@ -43,7 +43,7 @@ class Gameboard {
           throw new Error("Ship has already been instantiated");
         else {
           if (this.#isClearPath(coords)) {
-            this.#ships[argType] = new Ship(shipLength, coords);
+            this.#ships[argType] = new Ship(shipLength, coords, argDirection);
             for (const node of coords) {
               this.#grid[node[0]][node[1]] = { ship: this.#ships[argType] };
             }
@@ -87,7 +87,7 @@ class Gameboard {
   reportFleetSunk() {
     let count = 0;
     for (const ship in this.#ships) {
-      if (ship.isSunk()) count += 1;
+      if (this.#ships[ship].isSunk()) count += 1;
     }
     if (count >= 5) return true;
     else return false;

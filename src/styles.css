@@ -3,3 +3,38 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & main {
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+
+    & section {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+      grid-auto-flow: row;
+    }
+  }
+}
+
+.box {
+  border-top: 0.5px solid black;
+  border-left: 0.5px solid black;
+  width: 2rem;
+  height: 2rem;
+  overflow: auto;
+
+  &:nth-child(10n) {
+    border-right: 0.5px solid black;
+  }
+
+  &:nth-child(n + 91) {
+    border-bottom: 0.5px solid black;
+  }
+}

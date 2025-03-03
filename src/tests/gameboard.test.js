@@ -44,4 +44,23 @@ test("Hitting empty squares twice", () => {
 
 test("Reports if all ships have sunk", () => {
   gb.createShip("patrolBoat", [0, 4], "down");
+  expect(gb.reportFleetSunk()).toBe(false);
+  gb.receiveAttack(0, 0);
+  gb.receiveAttack(1, 0);
+  gb.receiveAttack(2, 0);
+  gb.receiveAttack(3, 0);
+  gb.receiveAttack(4, 0);
+  gb.receiveAttack(0, 1);
+  gb.receiveAttack(1, 1);
+  gb.receiveAttack(2, 1);
+  gb.receiveAttack(3, 1);
+  gb.receiveAttack(0, 2);
+  gb.receiveAttack(1, 2);
+  gb.receiveAttack(2, 2);
+  gb.receiveAttack(0, 3);
+  gb.receiveAttack(1, 3);
+  gb.receiveAttack(2, 3);
+  gb.receiveAttack(0, 4);
+  gb.receiveAttack(1, 4);
+  expect(gb.reportFleetSunk()).toBe(true);
 });

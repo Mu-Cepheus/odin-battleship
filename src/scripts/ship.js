@@ -3,16 +3,26 @@ export default class Ship {
   #hits;
   #sunk = false;
   #coords;
+  #direction;
 
-  constructor(argLength, argCoords) {
+  constructor(argLength, argCoords, argDirection) {
     this.#length = argLength;
     this.#hits = 0;
     this.#sunk = false;
     this.#coords = argCoords;
+    this.#direction = argDirection;
   }
 
   get coords() {
     return this.#coords;
+  }
+
+  get length() {
+    return this.#length;
+  }
+
+  get direction() {
+    return this.#direction;
   }
 
   hit() {
